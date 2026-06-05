@@ -4,6 +4,7 @@
 const TRANSLATIONS = {
   en: {
     langLabel:    'English',
+    languageSelectLabel: 'Select language',
     welcome:      'Welcome to SortSmart!',
     subtitle:     'An interactive way to learn recycling in Sweden',
     startBtn:     'Start Learning',
@@ -32,6 +33,7 @@ const TRANSLATIONS = {
 
   sv: {
     langLabel:    'Svenska',
+    languageSelectLabel: 'Välj språk',
     welcome:      'Välkommen till SortSmart!',
     subtitle:     'Lär dig sopsortering på ett interaktivt sätt',
     startBtn:     'Börja spela',

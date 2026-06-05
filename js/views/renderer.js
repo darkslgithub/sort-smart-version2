@@ -14,16 +14,19 @@ const Renderer = (() => {
     return `
       <header class="site-header">
         <div class="logo">SortSmart</div>
-        <button class="lang-pill" id="langBtn" aria-label="Switch language">
+        <div class="lang-select-wrap">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="12" cy="12" r="10"/>
             <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
           </svg>
-          ${t.langLabel}
+          <select class="lang-select" id="langSelect" aria-label="${t.languageSelectLabel}">
+            <option value="en" ${lang === 'en' ? 'selected' : ''}>English</option>
+            <option value="sv" ${lang === 'sv' ? 'selected' : ''}>Swedish</option>
+          </select>
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
             <polyline points="6 9 12 15 18 9"/>
           </svg>
-        </button>
+        </div>
       </header>`;
   }
 

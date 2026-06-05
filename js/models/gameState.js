@@ -1,7 +1,20 @@
 // ── MODEL — GAME STATE & LOGIC ─────────────────────────────────────────────
 
 const GameState = (() => {
-  let lang = 'en';
+  const LANG_STORAGE_KEY = 'sortsmart-lang';
+  const SUPPORTED_LANGS = ['en', 'sv'];
+
+  function readStoredLang() {
+    try {
+      const storedLang = window.localStorage?.getItem(LANG_STORAGE_KEY);
+      return SUPPORTED_LANGS.includes(storedLang) ? storedLang : 'en';
+    } catch {
+      return 'en';
+    }
+  }
+
+  let lang = readStoredLang();
+  document.documentElement.lang = lang;
 
   let state = {
     screen:         'start',  // 'start' | 'game' | 'result'
@@ -27,9 +40,19 @@ const GameState = (() => {
     return lang;
   }
 
-  function toggleLang() {
-    lang = lang === 'en' ? 'sv' : 'en';
+  function setLang(nextLang) {
+    if (!SUPPORTED_LANGS.includes(nextLang) || nextLang === lang) return;
+    lang = nextLang;
     document.documentElement.lang = lang;
+    try {
+      window.localStorage?.setItem(LANG_STORAGE_KEY, lang);
+    } catch {
+      // Ignore storage failures; the in-memory language state still updates.
+    }
+  }
+
+  function toggleLang() {
+    setLang(lang === 'en' ? 'sv' : 'en');
   }
 
   function getState() {
@@ -93,5 +116,5 @@ const GameState = (() => {
     }
   }
 
-  return { getLang, toggleLang, getState, startGame, goHome, answer, next };
+  return { getLang, setLang, toggleLang, getState, startGame, goHome, answer, next };
 })();
