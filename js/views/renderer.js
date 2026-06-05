@@ -94,7 +94,9 @@ const Renderer = (() => {
     return `
       <button class="bin-tile" style="background:${bin.color}" data-bin="${bin.key}" data-keynum="${keyNum}" ${disabledAttr}>
         ${keycap}
-        <span class="tile-icon">${bin.icon}</span>
+        <span class="tile-icon">
+          <img class="tile-icon-img" src="${bin.iconSrc}" alt="" aria-hidden="true">
+        </span>
         <span class="tile-label">${binLabel(bin, s.lang)}</span>
         ${badge}
       </button>`;
