@@ -322,6 +322,16 @@
         currentLang = 'en';
       }
     });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        window.location.href = 'index.html';
+      } else if (event.key === 'l' || event.key === 'L') {
+        event.preventDefault();
+        langBtn.click();
+      }
+    });
   </script>
 
 </body>

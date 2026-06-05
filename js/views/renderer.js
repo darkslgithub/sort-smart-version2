@@ -65,6 +65,9 @@ const Renderer = (() => {
         </svg>
         ${t.startBtn}
       </button>
+      <div class="kb-hint-footer">
+        <kbd>Space</kbd> / <kbd>Enter</kbd> ${t.kbStartHint} • <kbd>L</kbd> ${t.kbLangHint}
+      </div>
     </main>`;
 }
 
@@ -81,8 +84,13 @@ const Renderer = (() => {
       }
     }
     const disabledAttr = s.answered ? 'disabled' : '';
+    const keyNum = BINS.findIndex(b => b.key === bin.key) + 1;
+    const keycap = (!s.answered && keyNum > 0)
+      ? `<span class="bin-keycap" aria-hidden="true">${keyNum}</span>`
+      : '';
     return `
-      <button class="bin-tile" style="background:${bin.color}" data-bin="${bin.key}" ${disabledAttr}>
+      <button class="bin-tile" style="background:${bin.color}" data-bin="${bin.key}" data-keynum="${keyNum}" ${disabledAttr}>
+        ${keycap}
         <span class="tile-icon">${bin.icon}</span>
         <span class="tile-label">${binLabel(bin, s.lang)}</span>
         ${badge}
@@ -104,6 +112,10 @@ const Renderer = (() => {
     const itemLabel = s.lang === 'sv' ? q.itemSv : q.itemEn;
     const hint      = s.lang === 'sv' ? q.hintSv : q.hintEn;
     const binsHtml  = BINS.map(bin => renderBinTile(bin, s)).join('');
+
+    const gameKbHint = s.answered
+      ? `<div class="kb-hint-footer"><kbd>Space</kbd> / <kbd>Enter</kbd> ${t.kbNextHint} • <kbd>Esc</kbd> ${t.kbHomeHint}</div>`
+      : `<div class="kb-hint-footer"><kbd>1</kbd>–<kbd>5</kbd> ${t.kbSelectHint} • <kbd>Esc</kbd> ${t.kbHomeHint}</div>`;
 
     return `
       <main class="screen game-screen">
@@ -133,6 +145,8 @@ const Renderer = (() => {
           <div class="game-footer">
             <button class="next-btn" id="nextBtn">${t.next}</button>
           </div>` : ''}
+
+        ${gameKbHint}
       </main>`;
   }
 
@@ -163,6 +177,9 @@ const Renderer = (() => {
         <div class="result-actions">
           <button class="start-btn" id="playAgainBtn">${t.playAgain}</button>
           <button class="ghost-btn" id="homeResultBtn">${t.backToStart}</button>
+        </div>
+        <div class="kb-hint-footer">
+          <kbd>Space</kbd> / <kbd>Enter</kbd> ${t.kbPlayAgainHint} • <kbd>Esc</kbd> ${t.kbHomeHint} • <kbd>L</kbd> ${t.kbLangHint}
         </div>
       </main>`;
   }

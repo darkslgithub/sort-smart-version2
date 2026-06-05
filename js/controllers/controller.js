@@ -34,11 +34,54 @@ const Controller = (() => {
 
 //Global keyboard listener
 document.addEventListener('keydown', (event) => {
-  if (event.key === 'Enter') { 
-    const nextBtn = $('nextBtn'); 
-    if (nextBtn) {
-      event.preventDefault(); 
-      GameState.next();
+  const s = GameState.getState();
+
+  // Language toggle with L key
+  if (event.key === 'l' || event.key === 'L') {
+    if (document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+      event.preventDefault();
+      GameState.toggleLang();
+      update();
+      return;
+    }
+  }
+
+  if (s.screen === 'start') {
+    if (event.key === ' ' || event.key === 'Enter') {
+      event.preventDefault();
+      GameState.startGame();
+      update();
+    }
+  } else if (s.screen === 'game') {
+    if (!s.answered) {
+      if (['1', '2', '3', '4', '5'].includes(event.key)) {
+        event.preventDefault();
+        const index = parseInt(event.key, 10) - 1;
+        if (index >= 0 && index < BINS.length) {
+          GameState.answer(BINS[index].key);
+          update();
+        }
+      }
+    } else {
+      if (event.key === ' ' || event.key === 'Enter') {
+        event.preventDefault();
+        GameState.next();
+        update();
+      }
+    }
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      GameState.goHome();
+      update();
+    }
+  } else if (s.screen === 'result') {
+    if (event.key === ' ' || event.key === 'Enter') {
+      event.preventDefault();
+      GameState.startGame();
+      update();
+    } else if (event.key === 'Escape') {
+      event.preventDefault();
+      GameState.goHome();
       update();
     }
   }
