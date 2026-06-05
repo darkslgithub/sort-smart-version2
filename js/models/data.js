@@ -83,8 +83,8 @@ const QUESTIONS = [
     hintSv: 'Tidningar och tidskrifter går till Tidningar & papper.'
   },
   {
-    itemEn: 'Milk carton (Tetra Pak)',
-    itemSv: 'Mjölkförpackning (Tetra Pak)',
+    itemEn: 'Milk carton',
+    itemSv: 'Mjölkförpackning',
     emoji: 'assets\\milk.jpg',
     correctBin: 'paperPkg',
     hintEn: 'Liquid food cartons go to Paper Packaging (Pappers­förpackningar).',
