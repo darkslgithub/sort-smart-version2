@@ -1,4 +1,4 @@
-// ── VIEW — RENDERING FUNCTIONS ─────────────────────────────────────────────
+// ── VIEW — RENDERING FUNCTIONS test─────────────────────────────────────────────
 
 const Renderer = (() => {
 
