@@ -15,7 +15,7 @@ const Controller = (() => {
   function bindEvents(s) {
     // const $ = id => document.getElementById(id);
 
-    $('langBtn')      ?.addEventListener('click', () => { GameState.toggleLang(); update(); });
+    $('langSelect')   ?.addEventListener('change', (event) => { GameState.setLang(event.target.value); update(); });
     $('startBtn')     ?.addEventListener('click', () => { GameState.startGame();  update(); });
     $('homeBtn')      ?.addEventListener('click', () => { GameState.goHome();     update(); });
     $('nextBtn')      ?.addEventListener('click', () => { GameState.next();       update(); });
@@ -38,7 +38,7 @@ document.addEventListener('keydown', (event) => {
 
   // Language toggle with L key
   if (event.key === 'l' || event.key === 'L') {
-    if (document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+    if (!['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) {
       event.preventDefault();
       GameState.toggleLang();
       update();

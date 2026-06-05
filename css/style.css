@@ -12,8 +12,12 @@ body {
   color: #1a1a1a;
 }
 
-button {
+button,
+select {
   font-family: inherit;
+}
+
+button {
   cursor: pointer;
 }
 
@@ -32,23 +36,48 @@ button {
   letter-spacing: -1px;
 }
 
-.lang-pill {
-  display: flex;
+.lang-select-wrap {
+  position: relative;
+  display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   border: 1.5px solid #bbb;
   border-radius: 8px;
-  padding: 7px 14px;
-  font-size: 0.9rem;
-  font-weight: 500;
+  min-height: 38px;
+  padding: 0 10px;
   color: #333;
   background: white;
-  cursor: pointer;
   transition: background 0.15s, border-color 0.15s;
 }
 
-.lang-pill:hover  { background: #f5f5f5; border-color: #999; }
-.lang-pill:active { background: #ebebeb; }
+.lang-select-wrap:hover {
+  background: #f5f5f5;
+  border-color: #999;
+}
+
+.lang-select-wrap > svg {
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+.lang-select-wrap > svg:last-child {
+  position: absolute;
+  right: 10px;
+}
+
+.lang-select {
+  appearance: none;
+  -webkit-appearance: none;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  min-width: 112px;
+  padding: 8px 22px 8px 0;
+}
 
 /* ── SCREENS ────────────────────────────────────────────────────────────── */
 .screen {
@@ -339,11 +368,17 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 6px;
+  overflow: hidden;
 }
 
-.tile-icon svg {
-  width: 48px;
-  height: 54px;
+.tile-icon-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .tile-label {
@@ -511,6 +546,18 @@ button {
 }
 
 /* ── REFERENCE PAGE ─────────────────────────────────────────────────────── */
+.lang-sv { display: none; }
+.lang-en { display: initial; }
+body.show-sv .lang-en { display: none; }
+body.show-sv .lang-sv { display: initial; }
+
+.ref-lang-control {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  z-index: 2;
+}
+
 .ref-page-wrapper {
   max-width: 900px;
   margin: 0 auto;
@@ -579,9 +626,12 @@ button {
   flex-shrink: 0;
 }
 
-.ref-bin-tile svg {
-  width: 32px;
-  height: 36px;
+.ref-bin-icon {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
 }
 
 .ref-bin-name {
@@ -621,6 +671,7 @@ button {
 @media (max-width: 560px) {
   .site-header { padding: 14px 18px; }
   .logo { font-size: 1.5rem; }
+  .lang-select { min-width: 96px; }
 
   .illus-oval { padding: 28px 28px 18px; gap: 7px; }
   .illus-lid  { width: 52px; }
@@ -630,7 +681,7 @@ button {
   .start-title { font-size: 1.8rem; }
 
   .bin-tile { width: 88px; height: 88px; }
-  .tile-icon svg { width: 38px; height: 44px; }
+  .tile-icon { width: 38px; height: 38px; border-radius: 5px; }
   .tile-label { font-size: 0.66rem; }
 
   .item-emoji { width: 72px; height: 72px; }
@@ -640,6 +691,17 @@ button {
 
   .game-nav { gap: 8px; }
   .score-display { font-size: 0.85rem; }
+
+  .ref-lang-control {
+    position: static;
+    display: flex;
+    justify-content: flex-end;
+    padding: 14px 18px 0;
+  }
+
+  .ref-page-wrapper {
+    padding-top: 12px;
+  }
 }
 
 /* ── KEYBOARD ONLY CONTROLS STYLES ───────────────────────────────────────── */
@@ -695,11 +757,10 @@ button {
 .start-btn:focus-visible,
 .next-btn:focus-visible,
 .home-btn:focus-visible,
-.lang-pill:focus-visible,
+.lang-select-wrap:focus-within,
 .ghost-btn:focus-visible,
 .ref-fab:focus-visible,
-.ref-back-btn:focus-visible,
-.lang-toggle-btn:focus-visible {
+.ref-back-btn:focus-visible {
   outline: 3px solid #1b5e20;
   outline-offset: 3px;
 }
